@@ -26,12 +26,12 @@ class Sudoku:
             return(self._game[i][j])
         
         def setNum(self, i, j,n):
-            self._juego[i][j] = n
+            self._game[i][j] = n
             
         def getSolution(self):
             return self._solution
         
-        def verificar(self, linea, col, n):
+        def check(self, linea, col, n):
             linea = int(linea)
             col = int(col)
             if self.getNum(linea, col) == n:

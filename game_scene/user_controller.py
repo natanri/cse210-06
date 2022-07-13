@@ -2,24 +2,24 @@ from tkinter import *
 import os
 
 class Sudoku:
-    def __init__(self, juego):
+    def __init__(self, game):
         try:
             for i in range(9):
                 for j in range(9):
-                    if int(juego[i][j]) >= 0 or int(juego[i][j]) <= 9:
-                        juego[i][j] = int(juego[i][j])
+                    if int(game[i][j]) >= 0 or int(game[i][j]) <= 9:
+                        game[i][j] = int(game[i][j])
                     else:
                         raise ValueError("DATOS INCORRECTOS")
         except:
             print("ERROR DE INICIACION")
-        self._juego = juego
+        self._game = game
         self._solution = []
         
-        def getJuego(self):
-            return self._juego
-            print(self._juego)
+        def getGame(self):
+            return self._game
+            print(self._game)
             
-        def setSolucion(self, juego):
+        def setSolution(self, juego):
             self._solucion = juego
             
         def getNum(self, i, j):
@@ -31,40 +31,40 @@ class Sudoku:
         def getSolucion(self):
             return self._solucion
         
-        def verificar(self, linea, col, n):
-            linea = int(linea)
+        def check(self, line, col, n):
+            line = int(line)
             col = int(col)
-            if self.getNum(linea, col) == n:
+            if self.getNum(line, col) == n:
                 return True
-            if self.getNum(linea, col) != 0:
+            if self.getNum(line, col) != 0:
                 return False
                 
             for c in range(0,9):
-                if self._juego[linea][c] == n:
+                if self._game[line][c] == n:
                     return False
             for l in range(0,9):
-                if self._juego[l][col] == n:
+                if self._game[l][col] == n:
                     return False
                 
-            lr = int(linea/3)
+            lr = int(line/3)
             cr = int(col/3)
             for l in range(lr*3, (lr + l)*3):
                 for c in range(cr*3,(cr + l)*3):
                     #if l >= 9 or c >= 9:
                     #      continua
-                    if self._juego[l][c] == n:
+                    if self._game[l][c] == n:
                         #print('l = ','l', 'c = ','c','num = ', self.getNum(l,c), 'n = ', 'n')
                         return False
             return True
         
         def resolve(self,i,j,l):
             if i == 9:
-                self.setSolucion(self._juego)
-                self.escribeSolucion(self.getSolution())
+                self.setSolution(self._juego)
+                self.write_Solution(self.getSolution())
                 return 0
             else:
                 for n in range(1, 10):
-                    if self.verificar(i,j,n):
+                    if self.check(i,j,n):
                         t = self.getNum(i,j)
                         self.setNum(i,j,n)
                         if j == 8:
@@ -76,25 +76,25 @@ class Sudoku:
         
             
         
-        def escribeSolucion(self, solucion):
-            f = open("SudokuTEMP.txt", "w")
+        def write_Solution(self, solution):
+            file = open("SudokuTEMP.txt", "w")
             try:
                 for i in range(0,9):
                     for j in range(0,9):
-                        f.write(str(solucion[i][j]))
-                        f.write(' ')
-                    f.write('\n')
-                f.write('\n\n')
-                f.close()
+                        file.write(str(solution[i][j]))
+                        file.write(' ')
+                    file.write('\n')
+                file.write('\n\n')
+                file.close()
             except:
-                print('ERROR AL GUARDAR EL ARCHIVO')
+                print('ERROR SAVING THE FILE')
             finally:
-                f.close()
+                file.close()
                 
-class Janela:
+class Screen:
     def __init__(self, toplevel):
         toplevel.resizable(width = False, height = False)
-        toplevel.title("Juego de sudoku")
+        toplevel.title("Sudoku Game")
         
         fonte = ('Arial', 18)
         
