@@ -2,34 +2,34 @@ from tkinter import *
 import os
 
 class Sudoku:
-    def __init__(self, juego):
+    def __init__(self, game):
         try:
             for i in range(9):
                 for j in range(9):
-                    if int(juego[i][j]) >= 0 or int(juego[i][j]) <= 9:
-                        juego[i][j] = int(juego[i][j])
+                    if int(game[i][j]) >= 0 or int(game[i][j]) <= 9:
+                        game[i][j] = int(game[i][j])
                     else:
-                        raise ValueError("DATOS INCORRECTOS")
+                        raise ValueError("INCORRECT DATA")
         except:
-            print("ERROR DE INICIACION")
-        self._juego = juego
+            print("INITIALIZATION ERROR")
+        self._game = game
         self._solution = []
         
-        def getJuego(self):
-            return self._juego
-            print(self._juego)
+        def getGame(self):
+            return self._game
+            print(self._game)
             
-        def setSolucion(self, juego):
-            self._solucion = juego
+        def setSolution(self, game):
+            self._solution = game
             
         def getNum(self, i, j):
-            return(self._juego[i][j])
+            return(self._game[i][j])
         
         def setNum(self, i, j,n):
             self._juego[i][j] = n
             
-        def getSolucion(self):
-            return self._solucion
+        def getSolution(self):
+            return self._solution
         
         def verificar(self, linea, col, n):
             linea = int(linea)
@@ -40,10 +40,10 @@ class Sudoku:
                 return False
                 
             for c in range(0,9):
-                if self._juego[linea][c] == n:
+                if self._game[linea][c] == n:
                     return False
             for l in range(0,9):
-                if self._juego[l][col] == n:
+                if self._game[l][col] == n:
                     return False
                 
             lr = int(linea/3)
@@ -52,14 +52,14 @@ class Sudoku:
                 for c in range(cr*3,(cr + l)*3):
                     #if l >= 9 or c >= 9:
                     #      continua
-                    if self._juego[l][c] == n:
+                    if self._game[l][c] == n:
                         #print('l = ','l', 'c = ','c','num = ', self.getNum(l,c), 'n = ', 'n')
                         return False
             return True
         
         def resolve(self,i,j):
             if i == 9:
-                self.setSolucion(self._juego)
+                self.setSolution(self._juego)
                 self.escribeSolucion(self.getSolution())
                 return 0
             else:
@@ -76,12 +76,12 @@ class Sudoku:
         
             
         
-        def escribeSolucion(self, solucion):
+        def escribeSolucion(self, solution):
             f = open("SudokuTEMP.txt", "w")
             try:
                 for i in range(0,9):
                     for j in range(0,9):
-                        f.write(str(solucion[i][j]))
+                        f.write(str(solution[i][j]))
                         f.write(' ')
                     f.write('\n')
                 f.write('\n\n')
@@ -94,7 +94,7 @@ class Sudoku:
 class Janela:
     def __init__(self, toplevel):
         toplevel.resizable(width = False, height = False)
-        toplevel.title("Juego de sudoku")
+        toplevel.title("Sudoku Game")
         
         fonte = ('Arial', 18)
         
@@ -266,9 +266,9 @@ class Janela:
                 
     def Open(self):
         try:
-            f = open(self._nombredelarchivo, 'r')
+            file = open(self._nombredelarchivo, 'r')
             
-            texto = f.readline()
+            texto = file.readline()
             texto = texto.split(' ')
             for i in range(0,9):
                 for j in range(0,9):
@@ -277,14 +277,14 @@ class Janela:
                     else:
                         jg[i][j].set(texto[0])
                     texto.pop(0)
-                texto = f.readline()
+                texto = file.readline()
                 texto = texto.split(' ')
-            f.close()
+            file.close()
             
         except:
             print("HAY UN ERROR")
         finally:
-            f.close()
+            file.close()
             
 solucion = []
 raiz = Tk()
