@@ -177,6 +177,8 @@ class Janela:
                     
                 if j in [3,4,5] and i in [0,1,2,6,7,8,]:
                     cor = 'gray'
+                elif j not in [3,4,5] and i not in [0,1,2,6,7,8]:
+                    cor = 'gray'
                 else:
                     cor = 'white'
                     
@@ -236,7 +238,7 @@ class Janela:
         try:
             for i in range(9):
                 for j in range(9):
-                    if self._juegop[i][j].get() == '':
+                    if self._juego[i][j].get() == '':
                         f.write("0")
                     else:
                         f.write(self._juego[i][j].get())
