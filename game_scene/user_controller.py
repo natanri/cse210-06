@@ -19,17 +19,17 @@ class Sudoku:
             return self._game
             print(self._game)
             
-        def setSolution(self, juego):
-            self._solucion = juego
+        def setSolution(self, game):
+            self._solution = game
             
         def getNum(self, i, j):
-            return(self._juego[i][j])
+            return(self._game[i][j])
         
         def setNum(self, i, j,n):
-            self._juego[i][j] = n
+            self._game[i][j] = n
             
-        def getSolucion(self):
-            return self._solucion
+        def getSolution(self):
+            return self._solution
         
         def check(self, line, col, n):
             line = int(line)
@@ -99,43 +99,43 @@ class Screen:
         fonte = ('Arial', 18)
         
         self.fr = Frame(toplevel)
-        self.fr.bind('<Motion>', self.corrige)
+        self.fr.bind('<Motion>', self.correct)
         self.fr.pack(ipady = 0, padx = 0)
         
         self.fr1 = Frame(toplevel)
-        self.fr1.bind('<Motion>', self.corrige)
+        self.fr1.bind('<Motion>', self.correct)
         self.fr1.pack(ipady = 0, padx = 0)
         
         self.fr2 = Frame(toplevel)
-        self.fr2.bind('<Motion>', self.corrige)
+        self.fr2.bind('<Motion>', self.correct)
         self.fr2.pack(ipady = 0, padx = 0)
         
         self.fr3 = Frame(toplevel)
-        self.fr3.bind('<Motion>', self.corrige)
+        self.fr3.bind('<Motion>', self.correct)
         self.fr3.pack(ipady = 0, padx = 0)
         
         self.fr4 = Frame(toplevel)
-        self.fr4.bind('<Motion>', self.corrige)
+        self.fr4.bind('<Motion>', self.correct)
         self.fr4.pack(ipady = 0, padx = 0)
         
         self.fr5 = Frame(toplevel)
-        self.fr5.bind('<Motion>', self.corrige)
+        self.fr5.bind('<Motion>', self.correct)
         self.fr5.pack(ipady = 0, padx = 0)
         
         self.fr6 = Frame(toplevel)
-        self.fr6.bind('<Motion>', self.corrige)
+        self.fr6.bind('<Motion>', self.correct)
         self.fr6.pack(ipady = 0, padx = 0)
         
         self.fr7 = Frame(toplevel)
-        self.fr7.bind('<Motion>', self.corrige)
+        self.fr7.bind('<Motion>', self.correct)
         self.fr7.pack(ipady = 0, padx = 0)
         
         self.fr8 = Frame(toplevel)
-        self.fr8.bind('<Motion>', self.corrige)
+        self.fr8.bind('<Motion>', self.correct)
         self.fr8.pack(ipady = 0, padx = 0)
         
         self.fr9 = Frame(toplevel)
-        self.fr9.bind('<Motion>', self.corrige)
+        self.fr9.bind('<Motion>', self.correct)
         self.fr9.pack(ipady = 1, padx = 1)
         
         self._juego = []
@@ -146,7 +146,7 @@ class Screen:
         px = 0
         py = 0
         cor = 'white'
-        espesura = 0
+        thickness = 0
         for i in range(0,9):
             for j in range(0,9):
                 
@@ -170,10 +170,10 @@ class Screen:
                     variable = self.fr8
                 
                 if j%2 == 0 and i%2 == 0:
-                    espesura = 1
+                    thickness = 1
                 
                 if j%2 != 0 and i%2 != 0:
-                    espesura = 1
+                    thickness = 1
                     
                 if j in [3,4,5] and i in [0,1,2,6,7,8,]:
                     cor = 'gray'
@@ -182,13 +182,13 @@ class Screen:
                 else:
                     cor = 'white'
                     
-                self._juego[i][j] = Entry(variable, width = 2, font = fonte, bg = cor, cursor = 'arrow', borderwidth = 0, highlightcolor = 'yellow',highlightthickness = 1, highlightbackground = 'black', textvar = jg[i][j])
-                self._juego[i][j].bind('<Button-1>', self.corrige)
-                self._juego[i][j].bind('<FocusIn>', self.corrige)
-                self._juego[i][j].bind('<Motion>', self.corrige)
-                self._juego[i][j].pack(side = LEFT, padx = px, pady = py)
+                self._game[i][j] = Entry(variable, width = 2, font = fonte, bg = cor, cursor = 'arrow', borderwidth = 0, highlightcolor = 'yellow',highlightthickness = 1, highlightbackground = 'black', textvar = jg[i][j])
+                self._game[i][j].bind('<Button-1>', self.correct)
+                self._game[i][j].bind('<FocusIn>', self.correct)
+                self._game[i][j].bind('<Motion>', self.correct)
+                self._game[i][j].pack(side = LEFT, padx = px, pady = py)
                 
-                espesura = 0
+                thickness = 0
                 
         self.btn1 = Button(self.fr9, text = 'Save', fg = 'red', font = ('Arial', 11), command = self.save)
         self.btn1.pack(side = RIGHT)
@@ -205,7 +205,7 @@ class Screen:
         self._nombredelsarchivo = "Entrada.txt"
     def solve(self):
         try:
-            solucion = Sudoku(self.getJuego())
+            solucion = Sudoku(self.getGame())
             solucion.resolve(0,0)
             self._nombredelarchivo = "SudokuTEMP.txt"
             self.Open()
@@ -216,17 +216,17 @@ class Screen:
         finally:
             self._numbredelarchivo = "Entrada.txt"
             
-    def getJuego(self):
-        juego = []
+    def getGame(self):
+        game = []
         for i in range(9):
-            juego += [[0,0,0,0,0,0,0,0,0]]
+            game += [[0,0,0,0,0,0,0,0,0]]
         for i in range(9):
             for j in range(9):
                 #self._juego[i][j]
-                juego[i][j] = jg[i][j].get()
-                if juego[i][j] == '':
-                    juego[i][j] = 0
-        return juego
+                game[i][j] = jg[i][j].get()
+                if game[i][j] == '':
+                    game[i][j] = 0
+        return game
     
     def reset(self):
         for i in range(9):
@@ -234,24 +234,24 @@ class Screen:
                 jg[i][j].set('')
                 
     def save(self):
-        f = open("Sudoku.txt", "a")
+        file = open("Sudoku.txt", "a")
         try:
             for i in range(9):
                 for j in range(9):
-                    if self._juego[i][j].get() == '':
-                        f.write("0")
+                    if self._game[i][j].get() == '':
+                        file.write("0")
                     else:
-                        f.write(self._juego[i][j].get())
-                    f.write(' ')
-                f.write('\n')
-            f.write('\n\n')
-            f.close()
+                        file.write(self._game[i][j].get())
+                    file.write(' ')
+                file.write('\n')
+            file.write('\n\n')
+            file.close()
         except:
-            print("ERROR AL AGUARDAR EL ARCHIVO")
+            print("ERROR WHILE WAITING FOR THE FILE")
         finally:
-            f.close()
+            file.close()
             
-    def corrige(self, event):
+    def correct(self, event):
         for i in range(9):
             for j in range(9):
                 if jg[i][j].get() == '':
@@ -262,42 +262,42 @@ class Screen:
     def complete(self):
         for i in range(9):
             for j in range(9):
-                jg[i][j].set(self._juego[i][j])
+                jg[i][j].set(self._game[i][j])
                 
     def Open(self):
         try:
-            f = open(self._nombredelarchivo, 'r')
+            file = open(self._FileName, 'r')
             
-            texto = f.readline()
-            texto = texto.split(' ')
+            text = file.readline()
+            text = text.split(' ')
             for i in range(0,9):
                 for j in range(0,9):
-                    if texto[0] == '0':
+                    if text[0] == '0':
                         jg[i][j].set('')
                     else:
-                        jg[i][j].set(texto[0])
-                    texto.pop(0)
-                texto = f.readline()
-                texto = texto.split(' ')
-            f.close()
+                        jg[i][j].set(text[0])
+                    text.pop(0)
+                text = file.readline()
+                text = text.split(' ')
+            file.close()
             
         except:
             print("HAY UN ERROR")
         finally:
-            f.close()
+            file.close()
             
-solucion = []
-raiz = Tk()
-txt = StringVar(raiz)
+solution = []
+root = Tk()
+txt = StringVar(root)
 jg = []
 for i in range(1, 10):
     jg += [[0,0,0,0,0,0,0,0,0]]
 for i in range(0,9):
     for j in range(0,9):
-        jg[i][j] = StringVar(raiz)
+        jg[i][j] = StringVar(root)
         
-a = Janela(raiz)
-raiz.mainloop()
+a = Screen(root)
+root.mainloop()
                     
             
                 
