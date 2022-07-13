@@ -282,7 +282,7 @@ class Screen:
             file.close()
             
         except:
-            print("HAY UN ERROR")
+            print("THERE IS AN ERROR")
         finally:
             file.close()
             
