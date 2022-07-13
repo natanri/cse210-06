@@ -138,9 +138,9 @@ class Screen:
         self.fr9.bind('<Motion>', self.correct)
         self.fr9.pack(ipady = 1, padx = 1)
         
-        self._juego = []
+        self._game = []
         for i in range(1, 10):
-            self._juego += [[0,0,0,0,0,0,0,0,0]]
+            self._game += [[0,0,0,0,0,0,0,0,0]]
             
         variable = self.fr
         px = 0
